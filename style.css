@@ -1,10 +1,7 @@
-.container {
+.container-box {
     display: flex;
     flex-direction: column;
     font-family: 'Roboto Slab', serif;
-}
-
-.container-box {
     margin: 0;
 }
 
