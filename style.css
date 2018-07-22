@@ -28,11 +28,11 @@ h1{
     margin-bottom:  30px;
 }
 
-.idea {
+.toDo {
     color: #00a79d;
 }
 
-#title-input {
+.title-input {
     align-items: center;
     display: flex;
     height: 30px;
@@ -40,7 +40,7 @@ h1{
     width: 45%;
 }
 
-#body-input {
+.body-input {
     align-items: center;
     display: flex;
     height: 30px;
@@ -48,7 +48,7 @@ h1{
     width: 45%;
 }
 
-#search-input {
+.search-input {
     height: 30px;
     margin-top: 50px;
     width: 45%;
@@ -173,7 +173,7 @@ button {
         width: 85%;
     }
 
-    #search-input {
+    .search-input {
         border: solid #999 1px;
     }
 }
