@@ -1,28 +1,28 @@
 var title = $('.title-input').val();
 var body = $('.body-input').val();
 var numCards = 0;
-var qualityVariable = "swill";
+var quality = "swill";
+
 
 var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
+    $(".bottom-box").prepend('<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'
             + '<button class="delete-button"></button>'
             +'<p class="body-of-card">'
             + body + '</p>'
             + '<button class="upvote"></button>' 
             + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
+            + '<p class="quality">' + 'quality:' + '<span class="quality">' + quality + '</span>' + '</p>'
             + '<hr>' 
-            + '</div>';
+            + '</div>');
 };
 
-function cardObject() {
-    return {
-        title: $('.title-input').val(),
-        body: $('.body-input').val(),
-        quality: qualityVariable
+function cardObject(id, title, body, quality) {
+        this.id = $.now();
+        this.title = $('.title-input').val();
+        this.body = $('.body-input').val();
+        this.quality = quality || 'swill';
     };
-}
 
 $.each(localStorage, function(key) {
     var cardData = JSON.parse(this);
@@ -38,42 +38,42 @@ var localStoreCard = function() {
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
     if ($('.title-input').val() === "" || $('.body-input').val() === "") {
-       return false;
+       $('save-btn').disabled = true;
     };  
 
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('.title-input').val(), $('.body-input').val(), qualityVariable)); 
+    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('.title-input').val(), $('.body-input').val(), quality)); 
     localStoreCard();
     $('form')[0].reset();
 });
 
 $(".bottom-box").on('click', function(event){
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
+    var quality;
 
     if (event.target.className === "upvote" || event.target.className === "downvote"){
 
         if (event.target.className === "upvote" && currentQuality === "plausible"){
-            qualityVariable = "genius";
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+            quality = "genius";
+            $($(event.target).siblings('p.quality').children()[0]).text(quality);
                
         } else if (event.target.className === "upvote" && currentQuality === "swill") {
-            qualityVariable = "plausible";
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+            quality = "plausible";
+            $($(event.target).siblings('p.quality').children()[0]).text(quality);
                
         } else if (event.target.className === "downvote" && currentQuality === "plausible") {
-            qualityVariable = "swill"
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+            quality = "swill"
+            $($(event.target).siblings('p.quality').children()[0]).text(quality);
 
         } else if (event.target.className === "downvote" && currentQuality === "genius") {
-            qualityVariable = "plausible"
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+            quality = "plausible"
+            $($(event.target).siblings('p.quality').children()[0]).text(quality);
 
         } else if (event.target.className === "downvote" && currentQuality === "swill") {
-            qualityVariable = "swill";
+            quality = "swill";
         
         } else if (event.target.className === "upvote" && currentQuality === "genius") {
-            qualityVariable = "genius";
+            quality = "genius";
         }
 
     var cardHTML = $(event.target).closest('.card-container');
