@@ -5,6 +5,8 @@ var quality = "swill";
 
 $('.save-btn').on('click', saveCard);
 
+$(window).on('load', retrieveLocalStorage)
+
 function saveCard(event) {
   event.preventDefault();
   if ($('.title-input').val() === "" || $('.body-input').val() === "") {
@@ -33,53 +35,36 @@ function Card(title, body) {
         this.title = title;
         this.body = body;
         this.quality = quality || 'swill';
-        this.contents = (`<div id="${card.id}"class="card-container">
-                                <h2 class="title-of-card">${card.title}</h2>
-                                <button class="delete-button"></button>
-                                <p class="body-of-card">${card.body}</p>
-                                <button class="upvote"></button>
-                                <button class="downvote"></button>
-                                <p class="quality">quality: <span class="quality">${card.quality}</span></p>
-                              </div>`)
     };
 
-Card.prototype.updateLocalStorage = function(){
-  $(".bottom-box").prepend(`<div id="${card.id}"class="card-container">
-                                <h2 class="title-of-card">${card.title}</h2>
-                                <button class="delete-button"></button>
-                                <p class="body-of-card">${card.body}</p>
-                                <button class="upvote"></button>
-                                <button class="downvote"></button>
-                                <p class="quality">quality: <span class="quality">${card.quality}</span></p>
-                              </div>`);
-}
-// $.each(localStorage, function(key) {
-//     var cardData = JSON.parse(this);
-//     numCards++;
-//     $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-// });
 
 function localStoreCard(card) {
     var cardString = JSON.stringify(card);
     localStorage.setItem(card.id, cardString);
+};
+
+function retrieveLocalStorage() {
+  Object.keys(localStorage).forEach(function(key) {
+
+    var retrievedKey = localStorage.getItem(key);
+    var storedCard = JSON.parse(retrievedKey);
+  
+    addToPage(storedCard);
+  });
 }
 
 $(".bottom-box").on('click', function(event){
   var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
   var quality;
-
-  if (event.target.className === "upvote" || event.target.className === "downvote"){
-    if (event.target.className === "upvote"){
-      upvoteFunctionality(currentQuality);
-      updateLocalStorage();
-      localStoreCard(card);
-    } else if (event.target.className === "downvote") {
-      downvoteFunctionality(currentQuality);
-      updateLocalStorage();
-      localStoreCard(card);
+  var card = Card(title, body, quality)
+  if (event.target.className === "upvote"){
+    upvoteFunctionality(currentQuality);
+    localStoreCard(card);
+  } else if (event.target.className === "downvote") {
+    downvoteFunctionality(currentQuality);
+    localStoreCard(card);
     }
-  }
-});
+  });
 
 function downvoteFunctionality(currentQuality) {
   if (currentQuality === "plausible") {
@@ -96,14 +81,14 @@ function downvoteFunctionality(currentQuality) {
 
 function upvoteFunctionality(currentQuality) {
   if (currentQuality === "plausible"){
-      quality = "genius";
-      $($(event.target).siblings('p.quality').children()[0]).text(quality);         
-    } else if (currentQuality === "swill") {
-        quality = "plausible";
-        $($(event.target).siblings('p.quality').children()[0]).text(quality);         
-    } else if (currentQuality === "genius") {
-        quality = "genius";
-      $($(event.target).siblings('p.quality').children()[0]).text(quality); 
+    quality = "genius";
+    $($(event.target).siblings('p.quality').children()[0]).text(quality);         
+  } else if (currentQuality === "swill") {
+    quality = "plausible";
+    $($(event.target).siblings('p.quality').children()[0]).text(quality);         
+  } else if (currentQuality === "genius") {
+    quality = "genius";
+    $($(event.target).siblings('p.quality').children()[0]).text(quality); 
 }
 };
 
