@@ -13,7 +13,6 @@ function saveCard(event) {
     return;
   }
   var card = new Card($(".title-input").val(), $(".task-input").val());
-  // numCards++;
   addToPage(card);
   localStoreCard(card);
   $("form")[0].reset();
@@ -48,19 +47,12 @@ function retrieveLocalStorage() {
   Object.keys(localStorage).forEach(function(key) {
     var retrievedKey = localStorage.getItem(key);
     var storedCard = JSON.parse(retrievedKey);
-
     addToPage(storedCard);
   });
 }
 
 $(".bottom-box").on("click", function(event) {
-  var currentQuality = $(
-    $(event.target)
-      .siblings("p.quality")
-      .children()[0]
-  )
-    .text()
-    .trim();
+  var currentQuality = $($(event.target).siblings("p.quality").children()[0]).text().trim();
   var quality;
   var card = Card(title, task, quality);
   if (event.target.className === "upvote") {
@@ -75,50 +67,23 @@ $(".bottom-box").on("click", function(event) {
 function downvoteFunctionality(currentQuality) {
   if (currentQuality === "plausible") {
     quality = "swill";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    $($(event.target).siblings("p.quality").children()[0]).text(quality);
   } else if (currentQuality === "genius") {
     quality = "plausible";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    $($(event.target).siblings("p.quality").children()[0]).text(quality);
   } else if (currentQuality === "swill") {
-    quality = "swill";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    quality = "swill";$($(event.target).siblings("p.quality").children()[0]).text(quality);
   }
 }
 
 function upvoteFunctionality(currentQuality) {
   if (currentQuality === "plausible") {
-    quality = "genius";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    quality = "genius";$($(event.target).siblings("p.quality").children()[0]).text(quality);
   } else if (currentQuality === "swill") {
     quality = "plausible";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    $($(event.target).siblings("p.quality").children()[0]).text(quality);
   } else if (currentQuality === "genius") {
-    quality = "genius";
-    $(
-      $(event.target)
-        .siblings("p.quality")
-        .children()[0]
-    ).text(quality);
+    quality = "genius";$($(event.target).siblings("p.quality").children()[0]).text(quality);
   }
 }
 
@@ -127,6 +92,19 @@ function upvoteFunctionality(currentQuality) {
 // var cardObjectInJSON = localStorage.getItem(cardHTMLId);
 // var cardObjectInJS = JSON.parse(cardObjectInJSON);
 
+// cardObjectInJS.quality = qualityVariable;
+
+// var newCardJSON = JSON.stringify(cardObjectInJS);
+// localStorage.setItem(cardHTMLId, newCardJSON);
+// //     }
+
+// // //     else if (event.target.className === "delete-button") {
+// // //         var cardHTML = $(event.target).closest('.card-container').remove();
+// // //         var cardHTMLId = cardHTML[0].id;
+// // //   localStoreCard(card);
+// // //         localStorage.removeItem(cardHTMLId);
+// // //     }
+// // // };
 // cardObjectInJS.quality = qualityVariable;
 
 // var newCardJSON = JSON.stringify(cardObjectInJS);
