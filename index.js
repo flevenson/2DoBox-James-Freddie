@@ -4,8 +4,7 @@ var numCards = 0;
 var quality = "swill";
 
 $(".save-btn").on("click", saveCard);
-$(".bottom-box").on("click", deleteTask);
-
+$('.bottom-box').on('click', '.delete-button', deleteTask);
 $(window).on("load", retrieveLocalStorage);
 
 function saveCard(event) {
@@ -89,21 +88,10 @@ function upvoteFunctionality(currentQuality) {
 }
 
 function deleteTask(e) {
-  console.log(e)
-  if ($(e.target).hasClass('.delete-button')) {
-    $(e.target).parentElement().remove();
-    removeFromStorage(e);
-  }
-}
-
-function removeFromStorage(obj) {
-  console.log(currentTarget.childNodes[0])
-    cardId = obj.currentTarget.childNodes[0]
-    for(var key in localStorage) {
-      if(key === cardId) {
-        localStorage.removeItem(key)
-      }
-    }
+  console.log(e.target)
+  $(e.target).parent().remove();
+  var currentTaskId = $(e.target).parent().attr('id');
+  localStorage.removeItem(currentTaskId);
 }
 
 // var cardHTML = $(event.target).closest('.card-container');
