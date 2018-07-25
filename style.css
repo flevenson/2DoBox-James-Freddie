@@ -1,25 +1,24 @@
 body {
   box-sizing: border-box;
-   margin: 0;
+  margin: 0;
 }
 
 .container-box {
   display: flex;
   flex-direction: column;
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
 }
 
 .top-box {
   background-color: #e5f3f2;
-  height: 300px;
   text-align: center; /*fix*/
 }
 
-h1 {  
+h1 {
   color: #6d6e71;
   display: inline-block;
   font-size: 275%;
-  margin-bottom:  30px;
+  margin-bottom: 30px;
 }
 
 .toDo {
@@ -29,10 +28,10 @@ h1 {
 input {
   align-items: center;
   display: flex;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 100%;
   justify-content: space-between;
-  margin: auto;
+  margin: 2rem auto;
   height: 30px;
   width: 45%;
 }
@@ -43,6 +42,7 @@ input {
   font-size: 120%;
   height: 30px;
   width: 45.5%;
+  margin: 0.5rem auto 0;
 }
 
 .save-btn:hover {
@@ -50,7 +50,7 @@ input {
 }
 
 .search-input {
-  margin-top: 50px;  
+  margin-top: 50px;
 }
 
 .card-container {
@@ -66,20 +66,20 @@ input {
   width: 45%;
 }
 
-.title-of-card{
-  color: #6D6E71;
-  font-family: 'Roboto Slab', serif;
+.title-of-card {
+  color: #6d6e71;
+  font-family: "Roboto Slab", serif;
   font-size: 140%;
 }
 
 .quality {
   color: #939598;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-.body-of-card {
+.task-of-card {
   color: #939598;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 100%;
 }
 
@@ -92,7 +92,7 @@ button {
   background-image: url(./images/upvote.svg);
   background-size: cover;
   height: 20px;
-  margin-right: 5px; 
+  margin-right: 5px;
   width: 20px;
 }
 
@@ -126,8 +126,7 @@ button {
   background-image: url(./images/delete-hover.svg);
 }
 
-@media(max-width: 640px){
-
+@media (max-width: 640px) {
   .card-container {
     width: 85%;
   }
