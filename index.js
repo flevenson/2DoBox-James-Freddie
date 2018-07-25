@@ -1,6 +1,6 @@
 // var title = $(".title-input").val();
 // var task = $(".task-input").val();
-// var quality = "swill";
+// var importance = "Normal";
 
 $(".save-btn").on("click", saveCard);
 $('.bottom-box').on('click', '.delete-button', deleteTask);
@@ -24,16 +24,16 @@ function addToPage(card) {
                                 <p class="task-of-card">${card.task}</p>
                                 <button class="upvote"></button>
                                 <button class="downvote"></button>
-                                <p class="quality">quality: <span class="quality">${card.quality}</span>
+                                <p class="importance">Importance: <span class="importance">${card.importance}</span>
                                 </p>
                               </div>`);
 }
 
-function Card(title, task, quality) {
+function Card(title, task, importance) {
   this.id = $.now();
   this.title = $(".title-input").val();
   this.task = $(".task-input").val();
-  this.quality = quality || "swill";
+  this.importance = importance || "Normal";
 }
 
 function localStoreCard(card) {
@@ -50,38 +50,37 @@ function retrieveLocalStorage() {
 }
 
 $(".bottom-box").on("click", function(event) {
-  var currentQuality = $($(event.target).siblings("p.quality").children()[0]).text().trim();
-  var quality;
-  var card = Card(title, task, quality);
+  var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
+  // var card = Card(title, task, importance);
   if (event.target.className === "upvote") {
-    upvoteFunctionality(currentQuality);
+    upvoteFunctionality(currentImportance);
     localStoreCard(card);
   } else if (event.target.className === "downvote") {
-    downvoteFunctionality(currentQuality);
+    downvoteFunctionality(currentImportance);
     localStoreCard(card);
   }
 });
 
-function downvoteFunctionality(currentQuality) {
-  if (currentQuality === "plausible") {
-    quality = "swill";
-    $($(event.target).siblings("p.quality").children()[0]).text(quality);
-  } else if (currentQuality === "genius") {
-    quality = "plausible";
-    $($(event.target).siblings("p.quality").children()[0]).text(quality);
-  } else if (currentQuality === "swill") {
-    quality = "swill";$($(event.target).siblings("p.quality").children()[0]).text(quality);
+function downvoteFunctionality(currentImportance) {
+  if (currentImportance === "High") {
+    importance = "Normal";
+    $($(event.target).siblings("p.importance").children()[0]).text(importance);
+  } else if (currentImportance === "Critical") {
+    importance = "High";
+    $($(event.target).siblings("p.importance").children()[0]).text(importance);
+  } else if (currentImportance === "Normal") {
+    importance = "Normal";$($(event.target).siblings("p.importance").children()[0]).text(importance);
   }
 }
 
-function upvoteFunctionality(currentQuality) {
-  if (currentQuality === "plausible") {
-    quality = "genius";$($(event.target).siblings("p.quality").children()[0]).text(quality);
-  } else if (currentQuality === "swill") {
-    quality = "plausible";
-    $($(event.target).siblings("p.quality").children()[0]).text(quality);
-  } else if (currentQuality === "genius") {
-    quality = "genius";$($(event.target).siblings("p.quality").children()[0]).text(quality);
+function upvoteFunctionality(currentImportance) {
+  if (currentImportance === "High") {
+    importance = "Critical";$($(event.target).siblings("p.importance").children()[0]).text(importance);
+  } else if (currentImportance === "Normal") {
+    importance = "High";
+    $($(event.target).siblings("p.importance").children()[0]).text(importance);
+  } else if (currentImportance === "Critical") {
+    importance = "Critical";$($(event.target).siblings("p.importance").children()[0]).text(importance);
   }
 }
 
@@ -97,11 +96,11 @@ function deleteTask(e) {
 // var cardObjectInJSON = localStorage.getItem(cardHTMLId);
 // var cardObjectInJS = JSON.parse(cardObjectInJSON);
 
-// cardObjectInJS.quality = qualityVariable;
+// cardObjectInJS.importance = importanceVariable;
 
 // var newCardJSON = JSON.stringify(cardObjectInJS);
 // localStorage.setItem(cardHTMLId, newCardJSON);
-// cardObjectInJS.quality = qualityVariable;
+// cardObjectInJS.importance = importanceVariable;
 
 // var newCardJSON = JSON.stringify(cardObjectInJS);
 // localStorage.setItem(cardHTMLId, newCardJSON);
