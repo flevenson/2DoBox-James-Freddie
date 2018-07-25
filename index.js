@@ -1,7 +1,6 @@
-var title = $(".title-input").val();
-var task = $(".task-input").val();
-var numCards = 0;
-var quality = "swill";
+// var title = $(".title-input").val();
+// var task = $(".task-input").val();
+// var quality = "swill";
 
 $(".save-btn").on("click", saveCard);
 $('.bottom-box').on('click', '.delete-button', deleteTask);
@@ -25,16 +24,15 @@ function addToPage(card) {
                                 <p class="task-of-card">${card.task}</p>
                                 <button class="upvote"></button>
                                 <button class="downvote"></button>
-                                <p class="quality">quality: <span class="quality">${
-                                  card.quality
-                                }</span></p>
+                                <p class="quality">quality: <span class="quality">${card.quality}</span>
+                                </p>
                               </div>`);
 }
 
-function Card(title, task) {
+function Card(title, task, quality) {
   this.id = $.now();
-  this.title = title;
-  this.task = task;
+  this.title = $(".title-input").val();
+  this.task = $(".task-input").val();
   this.quality = quality || "swill";
 }
 
@@ -103,15 +101,6 @@ function deleteTask(e) {
 
 // var newCardJSON = JSON.stringify(cardObjectInJS);
 // localStorage.setItem(cardHTMLId, newCardJSON);
-// //     }
-
-// // //     else if (event.target.className === "delete-button") {
-// // //         var cardHTML = $(event.target).closest('.card-container').remove();
-// // //         var cardHTMLId = cardHTML[0].id;
-// // //   localStoreCard(card);
-// // //         localStorage.removeItem(cardHTMLId);
-// // //     }
-// // // };
 // cardObjectInJS.quality = qualityVariable;
 
 // var newCardJSON = JSON.stringify(cardObjectInJS);
