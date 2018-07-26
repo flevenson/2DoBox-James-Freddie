@@ -5,6 +5,8 @@
 $(".save-btn").on("click", saveCard);
 $('.bottom-box').on('click', '.delete-button', deleteTask);
 $(window).on("load", retrieveLocalStorage);
+$('.bottom-box').on('keyup', '.title-of-card', changeContent)
+$('.bottom-box').on('keyup', '.task-of-card', changeContent)
 
 function saveCard(event) {
   event.preventDefault();
@@ -19,9 +21,9 @@ function saveCard(event) {
 
 function addToPage(card) {
   $(".bottom-box").prepend(`<div id="${card.id}"class="card-container">
-                                <h2 class="title-of-card">${card.title}</h2>
+                                <h2 class="title-of-card" contenteditable="true">${card.title}</h2>
                                 <button class="delete-button"></button>
-                                <p class="task-of-card">${card.task}</p>
+                                <p class="task-of-card" contenteditable="true">${card.task}</p>
                                 <button class="upvote"></button>
                                 <button class="downvote"></button>
                                 <p class="importance">Importance: <span class="importance">${card.importance}</span>
@@ -40,6 +42,17 @@ function localStoreCard(card) {
   var cardString = JSON.stringify(card);
   localStorage.setItem(card.id, cardString);
 }
+
+function changeContent(e){
+  var cardID = $(e.target).parent().attr("id");
+  var parsedCard = JSON.parse(localStorage.getItem(cardID));
+  if($(e.target).is('.title-of-card')){
+    parsedCard.title = $(e.target).text();
+  } else if($(e.target).is('.task-of-card')){
+    parsedCard.task = $(e.target).text();
+  };
+  localStorage.setItem(cardID, JSON.stringify(parsedCard))
+};
 
 function retrieveLocalStorage() {
   Object.keys(localStorage).forEach(function(key) {
@@ -85,7 +98,6 @@ function upvoteFunctionality(currentImportance) {
 }
 
 function deleteTask(e) {
-  console.log(e.target)
   $(e.target).parent().remove();
   var currentTaskId = $(e.target).parent().attr('id');
   localStorage.removeItem(currentTaskId);
