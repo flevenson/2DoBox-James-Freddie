@@ -1,32 +1,32 @@
-$(".save-btn").on("click", saveCard);
-$('.bottom-box').on('click', '.delete-button', deleteTask);
 $(window).on("load", retrieveLocalStorage);
-$('.bottom-box').on('keyup', '.title-of-card', changeContent)
-$('.bottom-box').on('keyup', '.task-of-card', changeContent)
-$(".bottom-box").on("click", changeImportance)
+$('.bottom-box').on('keyup', '.title-of-card', changeContent);
+$('.bottom-box').on('keyup', '.task-of-card', changeContent);
+$(".bottom-box").on("click", changeImportance);
+$('.bottom-box').on('click', '.delete-button', deleteTask);
+$(".save-btn").on("click", saveCard);
 
 function saveCard(event) {
   event.preventDefault();
   if ($(".title-input").val() === "" || $(".task-input").val() === "") {
     return;
-  }
+  };
   var card = new Card($(".title-input").val(), $(".task-input").val());
   addToPage(card);
   localStoreCard(card);
   $("form")[0].reset();
-}
+};
 
 function addToPage(card) {
   $(".bottom-box").prepend(`<div id="${card.id}"class="card-container">
-                                <h2 class="title-of-card" contenteditable="true">${card.title}</h2>
-                                <button class="delete-button"></button>
-                                <p class="task-of-card" contenteditable="true">${card.task}</p>
-                                <button class="upvote"></button>
-                                <button class="downvote"></button>
-                                <p class="importance">Importance: <span class="importance">${card.importance}</span>
+                                <h2 class="title-of-card" contenteditable="true" aria-label="your editable task title">${card.title}</h2>
+                                <button class="delete-button" aria-label="click here to delete task"></button>
+                                <p class="task-of-card" contenteditable="true" aria-label="your editable task description">${card.task}</p>
+                                <button class="upvote" aria-label="click here to increase the importance of your task"></button>
+                                <button class="downvote" aria-label="click here to lower the importance of your task"></button>
+                                <p class="importance">Importance: <span class="importance" aria-label="your task importance level">${card.importance}</span>
                                 </p>
                               </div>`);
-}
+};
 
 function Card(title, task, importance) {
   this.id = $.now();
@@ -38,17 +38,17 @@ function Card(title, task, importance) {
 function localStoreCard(card) {
   var cardString = JSON.stringify(card);
   localStorage.setItem(card.id, cardString);
-}
+};
 
 function changeContent(e){
   var cardID = $(e.target).parent().attr("id");
   var parsedCard = JSON.parse(localStorage.getItem(cardID));
-  if($(e.target).is('.title-of-card')){
+  if ($(e.target).is('.title-of-card')){
     parsedCard.title = $(e.target).text();
-  } else if($(e.target).is('.task-of-card')){
+  } else if ($(e.target).is('.task-of-card')){
     parsedCard.task = $(e.target).text();
   };
-  localStorage.setItem(cardID, JSON.stringify(parsedCard))
+  localStorage.setItem(cardID, JSON.stringify(parsedCard));
 };
 
 function retrieveLocalStorage() {
@@ -57,26 +57,14 @@ function retrieveLocalStorage() {
     var storedCard = JSON.parse(retrievedKey);
     addToPage(storedCard);
   });
-}
-
-  // var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
-  // if (event.target.className === "upvote") {
-  //   upvoteFunctionality(currentImportance);
-  //   // localStoreCard(card);
-  // } else if (event.target.className === "downvote") {
-  //   downvoteFunctionality(currentImportance);
-  //   // localStoreCard(card);
-  // }
-// });
+};
 
 function changeImportance(event){
   var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
   if (event.target.className === "upvote") {
     upvoteFunctionality(currentImportance);
-    // localStoreCard(card);
   } else if (event.target.className === "downvote") {
     downvoteFunctionality(currentImportance);
-    // localStoreCard(card);
   }
 }
 
@@ -89,8 +77,8 @@ function downvoteFunctionality(currentImportance) {
     $($(event.target).siblings("p.importance").children()[0]).text(importance);
   } else if (currentImportance === "Normal") {
     importance = "Normal";$($(event.target).siblings("p.importance").children()[0]).text(importance);
-  }
-}
+  };
+};
 
 function upvoteFunctionality(currentImportance, i) {
   // var importanceArray = ['None', 'Low', 'Normal', 'High', 'Critical'];
@@ -105,34 +93,11 @@ function upvoteFunctionality(currentImportance, i) {
     $($(event.target).siblings("p.importance").children()[0]).text(importance);
   } else if (currentImportance === "Critical") {
     importance = "Critical";$($(event.target).siblings("p.importance").children()[0]).text(importance);
-  }
-}
+  };
+};
 
 function deleteTask(e) {
   $(e.target).parent().remove();
   var currentTaskId = $(e.target).parent().attr('id');
   localStorage.removeItem(currentTaskId);
-}
-
-// var cardHTML = $(event.target).closest('.card-container');
-// var cardHTMLId = cardHTML[0].id;
-// var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-// var cardObjectInJS = JSON.parse(cardObjectInJSON);
-
-// cardObjectInJS.importance = importanceVariable;
-
-// var newCardJSON = JSON.stringify(cardObjectInJS);
-// localStorage.setItem(cardHTMLId, newCardJSON);
-// cardObjectInJS.importance = importanceVariable;
-
-// var newCardJSON = JSON.stringify(cardObjectInJS);
-// localStorage.setItem(cardHTMLId, newCardJSON);
-// //     }
-
-// // //     else if (event.target.className === "delete-button") {
-// // //         var cardHTML = $(event.target).closest('.card-container').remove();
-// // //         var cardHTMLId = cardHTML[0].id;
-// // //   localStoreCard(card);
-// // //         localStorage.removeItem(cardHTMLId);
-// // //     }
-// // // };
+};
