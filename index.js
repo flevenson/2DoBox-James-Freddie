@@ -1,12 +1,9 @@
-// var title = $(".title-input").val();
-// var task = $(".task-input").val();
-// var importance = "Normal";
-
 $(".save-btn").on("click", saveCard);
 $('.bottom-box').on('click', '.delete-button', deleteTask);
 $(window).on("load", retrieveLocalStorage);
 $('.bottom-box').on('keyup', '.title-of-card', changeContent)
 $('.bottom-box').on('keyup', '.task-of-card', changeContent)
+$(".bottom-box").on("click", changeImportance)
 
 function saveCard(event) {
   event.preventDefault();
@@ -35,7 +32,7 @@ function Card(title, task, importance) {
   this.id = $.now();
   this.title = $(".title-input").val();
   this.task = $(".task-input").val();
-  this.importance = importance || "Normal";
+  this.importance = "Normal";
 }
 
 function localStoreCard(card) {
@@ -62,17 +59,26 @@ function retrieveLocalStorage() {
   });
 }
 
-$(".bottom-box").on("click", function(event) {
+  // var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
+  // if (event.target.className === "upvote") {
+  //   upvoteFunctionality(currentImportance);
+  //   // localStoreCard(card);
+  // } else if (event.target.className === "downvote") {
+  //   downvoteFunctionality(currentImportance);
+  //   // localStoreCard(card);
+  // }
+// });
+
+function changeImportance(event){
   var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
-  // var card = Card(title, task, importance);
   if (event.target.className === "upvote") {
     upvoteFunctionality(currentImportance);
-    localStoreCard(card);
+    // localStoreCard(card);
   } else if (event.target.className === "downvote") {
     downvoteFunctionality(currentImportance);
-    localStoreCard(card);
+    // localStoreCard(card);
   }
-});
+}
 
 function downvoteFunctionality(currentImportance) {
   if (currentImportance === "High") {
@@ -86,7 +92,12 @@ function downvoteFunctionality(currentImportance) {
   }
 }
 
-function upvoteFunctionality(currentImportance) {
+function upvoteFunctionality(currentImportance, i) {
+  // var importanceArray = ['None', 'Low', 'Normal', 'High', 'Critical'];
+  // var importanceIndex = importanceArray.indexOf(currentImportance);
+  // // currentImportance = importanceIndex++
+  // $($(event.target).siblings("p.importance").children()[0]).text(importanceIndex++)
+  // console.log(importanceIndex, currentImportance)
   if (currentImportance === "High") {
     importance = "Critical";$($(event.target).siblings("p.importance").children()[0]).text(importance);
   } else if (currentImportance === "Normal") {
