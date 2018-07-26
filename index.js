@@ -1,8 +1,9 @@
-$(".save-btn").on("click", saveCard);
-$('.bottom-box').on('click', '.delete-button', deleteTask);
 $(window).on("load", retrieveLocalStorage);
 $('.bottom-box').on('keyup', '.title-of-card', changeContent);
 $('.bottom-box').on('keyup', '.task-of-card', changeContent);
+$(".bottom-box").on("click", changeImportance);
+$('.bottom-box').on('click', '.delete-button', deleteTask);
+$(".save-btn").on("click", saveCard);
 
 function saveCard(event) {
   event.preventDefault();
@@ -31,8 +32,8 @@ function Card(title, task, importance) {
   this.id = $.now();
   this.title = $(".title-input").val();
   this.task = $(".task-input").val();
-  this.importance = importance || "Normal";
-};
+  this.importance = "Normal";
+}
 
 function localStoreCard(card) {
   var cardString = JSON.stringify(card);
@@ -42,12 +43,12 @@ function localStoreCard(card) {
 function changeContent(e){
   var cardID = $(e.target).parent().attr("id");
   var parsedCard = JSON.parse(localStorage.getItem(cardID));
-  if($(e.target).is('.title-of-card')){
+  if ($(e.target).is('.title-of-card')){
     parsedCard.title = $(e.target).text();
-  } else if($(e.target).is('.task-of-card')){
+  } else if ($(e.target).is('.task-of-card')){
     parsedCard.task = $(e.target).text();
   };
-  localStorage.setItem(cardID, JSON.stringify(parsedCard))
+  localStorage.setItem(cardID, JSON.stringify(parsedCard));
 };
 
 function retrieveLocalStorage() {
@@ -58,17 +59,14 @@ function retrieveLocalStorage() {
   });
 };
 
-$(".bottom-box").on("click", function(event) {
+function changeImportance(event){
   var currentImportance = $($(event.target).siblings("p.importance").children()[0]).text().trim();
-  // var card = Card(title, task, importance);
   if (event.target.className === "upvote") {
     upvoteFunctionality(currentImportance);
-    localStoreCard(card);
   } else if (event.target.className === "downvote") {
     downvoteFunctionality(currentImportance);
-    localStoreCard(card);
-  };
-});
+  }
+}
 
 function downvoteFunctionality(currentImportance) {
   if (currentImportance === "High") {
@@ -82,7 +80,12 @@ function downvoteFunctionality(currentImportance) {
   };
 };
 
-function upvoteFunctionality(currentImportance) {
+function upvoteFunctionality(currentImportance, i) {
+  // var importanceArray = ['None', 'Low', 'Normal', 'High', 'Critical'];
+  // var importanceIndex = importanceArray.indexOf(currentImportance);
+  // // currentImportance = importanceIndex++
+  // $($(event.target).siblings("p.importance").children()[0]).text(importanceIndex++)
+  // console.log(importanceIndex, currentImportance)
   if (currentImportance === "High") {
     importance = "Critical";$($(event.target).siblings("p.importance").children()[0]).text(importance);
   } else if (currentImportance === "Normal") {
@@ -98,26 +101,3 @@ function deleteTask(e) {
   var currentTaskId = $(e.target).parent().attr('id');
   localStorage.removeItem(currentTaskId);
 };
-
-// var cardHTML = $(event.target).closest('.card-container');
-// var cardHTMLId = cardHTML[0].id;
-// var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-// var cardObjectInJS = JSON.parse(cardObjectInJSON);
-
-// cardObjectInJS.importance = importanceVariable;
-
-// var newCardJSON = JSON.stringify(cardObjectInJS);
-// localStorage.setItem(cardHTMLId, newCardJSON);
-// cardObjectInJS.importance = importanceVariable;
-
-// var newCardJSON = JSON.stringify(cardObjectInJS);
-// localStorage.setItem(cardHTMLId, newCardJSON);
-// //     }
-
-// // //     else if (event.target.className === "delete-button") {
-// // //         var cardHTML = $(event.target).closest('.card-container').remove();
-// // //         var cardHTMLId = cardHTML[0].id;
-// // //   localStoreCard(card);
-// // //         localStorage.removeItem(cardHTMLId);
-// // //     }
-// // // };
